@@ -3,10 +3,19 @@ layout:     post
 title:      LinkedList
 category:   LeetCode
 tags: LinkedList
-description: LinkedList
 ---
 
 **汇总链表的题目**
+
+```python
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+```
+
+<!--more-->
 
 #### 21. Merge Two Sorted Lists
 
@@ -60,6 +69,8 @@ print("None")
 # 1  -> 2  -> 3  -> None
 ```
 
+------
+
 #### 24. Swap Nodes in Pairs
 
 > Given a linked list, swap every two adjacent nodes and return its head. You may not modify the values in the list's nodes, only nodes itself may be changed.
@@ -71,11 +82,6 @@ print("None")
 <!-- more -->
 
 ```python
-# Definition for singly-linked list.
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
 
 class Solution:
     def swapPairs(self, head: ListNode) -> ListNode:
@@ -112,6 +118,8 @@ while L:
 # 2  -> 1  -> 3  -> 
 ```
 
+------
+
 #### 61. Rotate List
 
 >Given a linked list, rotate the list to the right by k places, where k is non-negative.
@@ -119,11 +127,6 @@ while L:
 先获取长度，再把链表结成一个环，最后把指针指向那个点的前一个
 
 ```python
-# Definition for singly-linked list.
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
 
 class Solution:
     def rotateRight(self, head: ListNode, k: int) -> ListNode:
@@ -143,33 +146,7 @@ class Solution:
         return a
 ```
 
-#### 160. Intersection of Two Linked Lists
-
->Write a program to find the node at which the intersection of two singly linked lists begins.
-
-```python
-# Definition for singly-linked list.
-# class ListNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
-
-class Solution(object):
-    def getIntersectionNode(self, headA, headB):
-        """
-        :type head1, head1: ListNode
-        :rtype: ListNode
-        """
-        if headA is None or headB is None:
-            return None
-        l1 = headA
-        l2 = headB
-        # 最后总是会到达同一个位置，None 或者交叉点
-        while l1 != l2:
-            l1 = l1.next if l1 else headB
-            l2 = l2.next if l2 else headA
-        return l1
-```
+------
 
 #### 141. Linked List Cycle
 
@@ -225,6 +202,85 @@ class Solution(object):
         return False
 ```
 
+------
+
+#### 160. Intersection of Two Linked Lists
+
+>Write a program to find the node at which the intersection of two singly linked lists begins.
+
+```python
+class Solution(object):
+    def getIntersectionNode(self, headA, headB):
+        """
+        :type head1, head1: ListNode
+        :rtype: ListNode
+        """
+        if headA is None or headB is None:
+            return None
+        l1 = headA
+        l2 = headB
+        # 最后总是会到达同一个位置，None 或者交叉点
+        while l1 != l2:
+            l1 = l1.next if l1 else headB
+            l2 = l2.next if l2 else headA
+        return l1
+```
+
+------
+
+#### 206. Reverse Linked List
+
+>Reverse a singly linked list.
+
+* 保存当前头结点的下个节点。
+* 将当前头结点的下一个节点指向“上一个节点”，这一步是实现了反转。
+* 将当前头结点设置为“上一个节点”。
+* 将保存的下一个节点设置为头结点。
+
+做这种题总感觉赋来赋去的乱的很，，
+
+```python
+class Solution:
+    def reverseList(self, head: ListNode) -> ListNode:
+        l1 = ListNode(0)
+        l1 = l1.next
+        while head:
+            l2 = head.next
+            head.next = l1
+            l1 = head
+            head = l2
+        return l1
+```
+
+------
+
+#### 328. Odd Even Linked List
+
+> Given a singly linked list, group all odd nodes together followed by the even nodes. Please note here we are talking about the node number and not the value in the nodes.
+
+* 先初始化两个小狗并保存，它们的 `next` 分别指向 `head` 和 `head.next`，然后让小狗各自站到自己的 `next` 上（此时两只小狗是错位的）
+* 检查 `even` 小狗是不是 `None`，是的话就赋给 `head` 结束循环，不是的话就让 `head` 指针向后两步（开始检查循环）
+* 循环结束之后，令 `odd` 小狗的 `next` 指向初始化时保存的 `even` 小狗的 `next`
+* 返回 `even` 小狗的备份的 `next`
+
+```python
+class Solution:
+    def oddEvenList(self, head: ListNode) -> ListNode:
+        l1 = odd = ListNode(0)
+        l2 = even = ListNode(0)
+        while head:
+            odd.next = head
+            even.next = head.next
+            odd = odd.next
+            even = even.next
+
+            head = head.next.next if even else None
+        odd.next = l2.next
+        return l1.next
+```
+
+------
+
 #### 876. Middle of the Linked List
 
 > Given a non-empty, singly linked list with head node head, return a middle node of linked list. If there are two middle nodes, return the second middle node.
@@ -238,12 +294,6 @@ class Solution(object):
 ##### 方法1
 
 ```python
-#Definition for singly-linked list.
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
-
 class Solution:
     def middleNode(self, head: ListNode) -> ListNode:
         i = 0
@@ -261,12 +311,6 @@ class Solution:
 ##### 方法2
 
 ```python
-#Definition for singly-linked list.
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
-
 class Solution:
     def middleNode(self, head: ListNode) -> ListNode:
         l = head
