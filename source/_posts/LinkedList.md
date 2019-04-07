@@ -146,6 +146,27 @@ class Solution:
         return a
 ```
 
+#### 86. Partition List
+>Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x. You should preserve the original relative order of the nodes in each of the two partitions.
+
+```python
+class Solution:
+    def partition(self, head: ListNode, x: int) -> ListNode:
+        A = l1 = ListNode(0)
+        B = l2 = ListNode(0)
+        
+        while head:
+            if head.val < x:
+                l1.next = ListNode(head.val)
+                l1 = l1.next
+            else:
+                l2.next = ListNode(head.val)
+                l2 = l2.next
+            head = head.next
+        l1.next = B.next
+        
+        return A.next
+```
 ------
 
 #### 141. Linked List Cycle
@@ -201,6 +222,68 @@ class Solution(object):
                 return True
         return False
 ```
+------
+
+#### 143. Reorder List
+
+>Given a singly linked list L: L0→L1→…→Ln-1→Ln,
+reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
+You may not modify the values in the list's nodes, only nodes itself may be changed.
+
+思路应该是先用快慢指针找到指针的[中点](#876-Middle-of-the-Linked-List)，然后把后半个指针[翻转](#206-Reverse-Linked-List)过来，最后合并两个指针，每一步都是 **知识点** ⊂[┐'_'┌]⊃
+
+合并思路是：
+
+* 先把 A 的下一位保存，然后指向 B，指针下移一位
+* 当前指针的下一位指向上一步保存的位置
+* 指针下移一位，链表二指针也下移一位 
+
+```python
+class Solution:
+    def reorderList(self, head: ListNode) -> None:
+        """
+        Do not return anything, modify head in-place instead.
+        """
+        if not head or not head.next:
+            return
+        
+        a, b = self.splitList(head)
+        b = self.reverseList(b)
+        head = self.mergeLists(a, b)
+        
+    def splitList(self, head: ListNode) -> None:
+        fast = slow = head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+        mid = slow.next
+        slow.next = None
+        return head,mid
+
+    def reverseList(self, head: ListNode) -> None:
+        l1 = ListNode(0)
+        l1 = l1.next
+        while head:
+            l2 = head.next
+            head.next = l1
+            l1 = head
+            head = l2
+        return l1
+
+    def mergeLists(self, l1: ListNode, l2: ListNode) -> None:
+        head = l1
+        tail = l1
+
+        while l2:
+            A = tail.next
+            tail.next = l2
+            tail = tail.next
+            l2 = l2.next
+            tail.next = A
+            tail = tail.next
+        return head
+```
+
 
 ------
 
