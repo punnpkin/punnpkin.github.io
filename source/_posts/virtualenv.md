@@ -2,7 +2,7 @@
 layout:     post
 title:      记录 virtualenv 的使用
 category:   Linux
-tags: pip
+tags:       pip
 ---
 
 **记录 virtualenv 的使用**
@@ -48,7 +48,7 @@ $ pip install virtualenv --user
 $ find / -name python3
 // 指定 python3 创建干净环境
 $ sudo virtualenv --no-site-packages -p /usr/bin/python3 venv
-$ source densefusionEnv/bin/activate
+$ source venv/bin/activate
 // 查看版本
 $ pip -V
 $ python -V
