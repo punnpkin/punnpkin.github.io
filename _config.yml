@@ -89,3 +89,12 @@ backup:
   theme: next
   repository:
     github: https://github.com/punnpkin/punnpkin.github.io.git,backup
+
+Plugins:
+- hexo-generator-baidu-sitemap
+- hexo-generator-sitemap
+
+baidusitemap:
+    path: baidusitemap.xml
+sitemap:
+    path: sitemap.xml
