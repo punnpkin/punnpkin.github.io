@@ -364,6 +364,28 @@ class Solution:
 
 ------
 
+#### 817. Linked List Components
+> Return the number of connected components in G, where two values are connected if they appear consecutively in the linked list.
+
+利用集合的思路来做：判断当前的值在不在 G 中，如果在则判断下一位是不是 **不在** 或者是 **结尾**，是的话计数器加一，若当前的值不在则后羿一位继续判断。
+
+```python
+class Solution:
+    def numComponents(self, head: ListNode, G: List[int]) -> int:
+        res = 0
+        setG = set(G)
+        while(head):
+            if head.val in setG:
+                head = head.next
+                if (head == None or head.val not in setG):
+                    res += 1
+            else:
+                head = head.next
+        return res
+```
+
+------
+
 #### 876. Middle of the Linked List
 
 > Given a non-empty, singly linked list with head node head, return a middle node of linked list. If there are two middle nodes, return the second middle node.
