@@ -47,7 +47,7 @@ $ pip install virtualenv --user
 // 查找解释器位置
 $ find / -name python3
 // 指定 python3 创建干净环境
-$ sudo virtualenv --no-site-packages -p /usr/bin/python3 venv
+$ virtualenv --no-site-packages -p /usr/bin/python3 venv
 $ source venv/bin/activate
 // 查看版本
 $ pip -V
