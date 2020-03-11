@@ -168,7 +168,7 @@
 
             ctx.moveTo(0, 0);
             ctx.scale(0.75, 0.75);
-            ctx.font = "12px 微软雅黑,Verdana"; // 字号肿么没有用? (ˉ(∞)ˉ)
+            ctx.font = "12px 微软雅黑,Verdana";
             ctx.fillText("小可爱你好!", 23, 10);
             ctx.restore();
         },
@@ -471,8 +471,11 @@
     Bloom = function(tree, point, figure, color, alpha, angle, scale, place, speed) {
         this.tree = tree;
         this.point = point;
-        this.color = color || 'rgb(255,' + random(0, 255) + ',' + random(0, 255) + ')';
-        this.alpha = alpha || random(0.3, 1);
+        var rColor = ["#FFFFCC","#CCFFFF","#FFCCCC","#FFFF99","#CCCCCC","#CCCCFF","#CCFFCC","#CCFF99","#CCFFFF","#CCCCFF","#FFFFFF",]
+        var n = Math.floor(Math.random() * rColor.length + 1)-1;
+        this.color = rColor[n];
+        //this.color = color || 'rgb(155,' + random(0, 255) + ',' + random(0, 255) + ')';
+        //this.alpha = alpha || random(0.3, 1);
         this.angle = angle || random(0, 360);
         this.scale = scale || 0.1;
         this.place = place;
