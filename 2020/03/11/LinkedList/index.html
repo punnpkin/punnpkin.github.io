@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="google-site-verification" content="FOuIEq-OrewqZZTr4wLzTPl---uyoGABPgoHHHq3550">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="LinkedList,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="汇总链表的题目 12345# Definition for singly-linked list.class ListNode:    def __init__(self, x):        self.val = x        self.next = None">
+<meta name="keywords" content="LinkedList">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LinkedList">
+<meta property="og:url" content="http://youngnan.tk/2020/03/11/LinkedList/index.html">
+<meta property="og:site_name" content="YoungNan">
+<meta property="og:description" content="汇总链表的题目 12345# Definition for singly-linked list.class ListNode:    def __init__(self, x):        self.val = x        self.next = None">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-11T01:48:07.780Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LinkedList">
+<meta name="twitter:description" content="汇总链表的题目 12345# Definition for singly-linked list.class ListNode:    def __init__(self, x):        self.val = x        self.next = None">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://youngnan.tk/2020/03/11/LinkedList/">
+
+
+
+
+
+  <title>LinkedList | YoungNan</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoungNan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://youngnan.tk/2020/03/11/LinkedList/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Pumpkin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungNan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">LinkedList</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-11T09:48:07+08:00">
+                2020-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/11/LinkedList/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/03/11/LinkedList/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>汇总链表的题目</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for singly-linked list.</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListNode</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        self.val = x</span><br><span class="line">        self.next = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="21-Merge-Two-Sorted-Lists"><a href="#21-Merge-Two-Sorted-Lists" class="headerlink" title="21. Merge Two Sorted Lists"></a>21. Merge Two Sorted Lists</h4><blockquote>
+<p>Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.</p>
+</blockquote>
+<p>一开始想的简单了 因为是 easy 类型的 还以为就是简单的合并一下（等长，不按顺序）</p>
+<p>要求也没说清楚啊 ╭(╯^╰)╮</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListNode</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        self.val = x</span><br><span class="line">        self.next = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">mergeTwoLists</span><span class="params">(self, l1: ListNode, l2: ListNode)</span> -&gt; ListNode:</span></span><br><span class="line">        l4 = l3 = ListNode(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> l1 <span class="keyword">or</span> <span class="keyword">not</span> l2:</span><br><span class="line">            <span class="keyword">return</span> l2 <span class="keyword">or</span> l1</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> l1 <span class="keyword">and</span> l2:</span><br><span class="line">            <span class="keyword">if</span> l1.val &lt; l2.val:</span><br><span class="line">                l3.next = l1</span><br><span class="line">                l1 = l1.next</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                l3.next = l2</span><br><span class="line">                l2 = l2.next</span><br><span class="line">            l3 = l3.next</span><br><span class="line">        l3.next = l1 <span class="keyword">or</span> l2        </span><br><span class="line">        <span class="keyword">return</span> l4.next</span><br></pre></td></tr></table></figure>
+<p>Test</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">s  = Solution</span><br><span class="line">l1 = ListNode(<span class="number">3</span>)</span><br><span class="line">l2 = ListNode(<span class="number">1</span>)</span><br><span class="line">l2.next = ListNode(<span class="number">2</span>)</span><br><span class="line">L = s.mergeTwoLists(s,l1,l2)</span><br><span class="line"><span class="keyword">while</span> L:</span><br><span class="line">    print(L.val,<span class="string">" -&gt; "</span>, end = <span class="string">""</span>)</span><br><span class="line">    L = L.next</span><br><span class="line">print(<span class="string">"None"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1  -&gt; 2  -&gt; 3  -&gt; None</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="24-Swap-Nodes-in-Pairs"><a href="#24-Swap-Nodes-in-Pairs" class="headerlink" title="24. Swap Nodes in Pairs"></a>24. Swap Nodes in Pairs</h4><blockquote>
+<p>Given a linked list, swap every two adjacent nodes and return its head. You may not modify the values in the list’s nodes, only nodes itself may be changed.</p>
+</blockquote>
+<p>思路：两个节点为一个单位做处理，循环每次交换两个相邻节点</p>
+<p>在每一次循环时，先取出 <code>head.next</code> 赋给一个临时变量 <code>temp</code> , 然后用 <code>head.next = temp.next</code> 扔掉 <code>head</code> 中的 <code>next</code>, 再令 <code>temp.next = head</code> 完成交换节点的目的</p>
+<!-- more -->
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">swapPairs</span><span class="params">(self, head: ListNode)</span> -&gt; ListNode:</span></span><br><span class="line">        l1 = l2 = ListNode(<span class="number">0</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> head <span class="keyword">or</span> <span class="keyword">not</span> head.next:</span><br><span class="line">            <span class="keyword">return</span> head</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> head <span class="keyword">and</span> head.next:</span><br><span class="line">            a = head.next</span><br><span class="line">            head.next = a.next</span><br><span class="line">            a.next = head</span><br><span class="line">            l2.next = a</span><br><span class="line">            l2 = l2.next.next</span><br><span class="line">            head = head.next</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> l1.next</span><br></pre></td></tr></table></figure>
+<p>Test</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">l2 = l1 = ListNode(<span class="number">1</span>)</span><br><span class="line">l1.next = ListNode(<span class="number">2</span>)</span><br><span class="line">l1 = l1.next</span><br><span class="line">l1.next = ListNode(<span class="number">3</span>)</span><br><span class="line">l1 = l1.next</span><br><span class="line"></span><br><span class="line">s = Solution</span><br><span class="line">L = s.swapPairs(s,l2)</span><br><span class="line"><span class="keyword">while</span> L:</span><br><span class="line">    print(L.val,<span class="string">" -&gt; "</span>, end = <span class="string">""</span>)</span><br><span class="line">    L = L.next</span><br><span class="line"><span class="comment"># 2  -&gt; 1  -&gt; 3  -&gt;</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="61-Rotate-List"><a href="#61-Rotate-List" class="headerlink" title="61. Rotate List"></a>61. Rotate List</h4><blockquote>
+<p>Given a linked list, rotate the list to the right by k places, where k is non-negative.</p>
+</blockquote>
+<p>先获取长度，再把链表结成一个环，最后把指针指向那个点的前一个</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rotateRight</span><span class="params">(self, head: ListNode, k: int)</span> -&gt; ListNode:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> head:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        l1 = l2 = head</span><br><span class="line">        m = <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> head.next:</span><br><span class="line">            head = head.next</span><br><span class="line">            m += <span class="number">1</span></span><br><span class="line">        k %= m</span><br><span class="line">        head.next = l1</span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(m - k):</span><br><span class="line">            head = head.next</span><br><span class="line">        a = head.next</span><br><span class="line">        head.next = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">return</span> a</span><br></pre></td></tr></table></figure>
+<h4 id="86-Partition-List"><a href="#86-Partition-List" class="headerlink" title="86. Partition List"></a>86. Partition List</h4><blockquote>
+<p>Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x. You should preserve the original relative order of the nodes in each of the two partitions.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">partition</span><span class="params">(self, head: ListNode, x: int)</span> -&gt; ListNode:</span></span><br><span class="line">        A = l1 = ListNode(<span class="number">0</span>)</span><br><span class="line">        B = l2 = ListNode(<span class="number">0</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> head:</span><br><span class="line">            <span class="keyword">if</span> head.val &lt; x:</span><br><span class="line">                l1.next = ListNode(head.val)</span><br><span class="line">                l1 = l1.next</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                l2.next = ListNode(head.val)</span><br><span class="line">                l2 = l2.next</span><br><span class="line">            head = head.next</span><br><span class="line">        l1.next = B.next</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> A.next</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="141-Linked-List-Cycle"><a href="#141-Linked-List-Cycle" class="headerlink" title="141. Linked List Cycle"></a>141. Linked List Cycle</h4><blockquote>
+<p>Given a linked list, determine if it has a cycle in it.</p>
+<p>To represent a cycle in the given linked list, we use an integer <code>pos</code> which represents the position (0-indexed) in the linked list where tail connects to. If <code>pos</code> is <code>-1</code>, then there is no cycle in the linked list.</p>
+</blockquote>
+<p>拿到这个题的第一想法就是通过某个类似 list 的结构记住链表对象，然后每次循环都去比对，自然想到用 hash 表。然后运行时间</p>
+<blockquote>
+<p>Runtime: 1144 ms, faster than 5.08% of Python online submissions for Linked List Cycle.</p>
+</blockquote>
+<p>有点长，复杂度应该是 O(n)。</p>
+<p>第二个办法是找两只小狗，让他们以不同的速度跑，如果跑道是圆的，两只小狗就一定会再相遇的ヾ(◍°∇°◍)ﾉﾞ</p>
+<p>这个方法的好处在于空间复杂度小点，因为不用存那么多东西。</p>
+<!--more-->
+<p><strong>方法一</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasCycle</span><span class="params">(self, head)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type head: ListNode</span></span><br><span class="line"><span class="string">        :rtype: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        hash_list = []</span><br><span class="line">        <span class="keyword">while</span> head:</span><br><span class="line">            hash_list.append(hash(head))</span><br><span class="line">            <span class="keyword">if</span> hash(head.next) <span class="keyword">in</span> hash_list:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">            head = head.next</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<p><strong>方法二</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasCycle</span><span class="params">(self, head)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type head: ListNode</span></span><br><span class="line"><span class="string">        :rtype: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        l1 = l2 = head</span><br><span class="line">        <span class="keyword">while</span> l2 <span class="keyword">and</span> l2.next:</span><br><span class="line">            l1 = l1.next</span><br><span class="line">            l2 = l2.next.next</span><br><span class="line">            <span class="keyword">if</span> l1 <span class="keyword">is</span> l2:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="143-Reorder-List"><a href="#143-Reorder-List" class="headerlink" title="143. Reorder List"></a>143. Reorder List</h4><blockquote>
+<p>Given a singly linked list L: L0→L1→…→Ln-1→Ln,<br>reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…<br>You may not modify the values in the list’s nodes, only nodes itself may be changed.</p>
+</blockquote>
+<p>思路应该是先用快慢指针找到指针的<a href="#876-Middle-of-the-Linked-List">中点</a>，然后把后半个指针<a href="#206-Reverse-Linked-List">翻转</a>过来，最后合并两个指针，每一步都是 <strong>知识点</strong> ⊂[┐’_’┌]⊃</p>
+<p>合并思路是：</p>
+<ul>
+<li>先把 A 的下一位保存，然后指向 B，指针下移一位</li>
+<li>当前指针的下一位指向上一步保存的位置</li>
+<li>指针下移一位，链表二指针也下移一位 </li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reorderList</span><span class="params">(self, head: ListNode)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Do not return anything, modify head in-place instead.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> head <span class="keyword">or</span> <span class="keyword">not</span> head.next:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        </span><br><span class="line">        a, b = self.splitList(head)</span><br><span class="line">        b = self.reverseList(b)</span><br><span class="line">        head = self.mergeLists(a, b)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">splitList</span><span class="params">(self, head: ListNode)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        fast = slow = head</span><br><span class="line">        <span class="keyword">while</span> fast <span class="keyword">and</span> fast.next:</span><br><span class="line">            fast = fast.next.next</span><br><span class="line">            slow = slow.next</span><br><span class="line">        mid = slow.next</span><br><span class="line">        slow.next = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">return</span> head,mid</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reverseList</span><span class="params">(self, head: ListNode)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        l1 = ListNode(<span class="number">0</span>)</span><br><span class="line">        l1 = l1.next</span><br><span class="line">        <span class="keyword">while</span> head:</span><br><span class="line">            l2 = head.next</span><br><span class="line">            head.next = l1</span><br><span class="line">            l1 = head</span><br><span class="line">            head = l2</span><br><span class="line">        <span class="keyword">return</span> l1</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">mergeLists</span><span class="params">(self, l1: ListNode, l2: ListNode)</span> -&gt; <span class="keyword">None</span>:</span></span><br><span class="line">        head = l1</span><br><span class="line">        tail = l1</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> l2:</span><br><span class="line">            A = tail.next</span><br><span class="line">            tail.next = l2</span><br><span class="line">            tail = tail.next</span><br><span class="line">            l2 = l2.next</span><br><span class="line">            tail.next = A</span><br><span class="line">            tail = tail.next</span><br><span class="line">        <span class="keyword">return</span> head</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="160-Intersection-of-Two-Linked-Lists"><a href="#160-Intersection-of-Two-Linked-Lists" class="headerlink" title="160. Intersection of Two Linked Lists"></a>160. Intersection of Two Linked Lists</h4><blockquote>
+<p>Write a program to find the node at which the intersection of two singly linked lists begins.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getIntersectionNode</span><span class="params">(self, headA, headB)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type head1, head1: ListNode</span></span><br><span class="line"><span class="string">        :rtype: ListNode</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> headA <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> headB <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        l1 = headA</span><br><span class="line">        l2 = headB</span><br><span class="line">        <span class="comment"># 最后总是会到达同一个位置，None 或者交叉点</span></span><br><span class="line">        <span class="keyword">while</span> l1 != l2:</span><br><span class="line">            l1 = l1.next <span class="keyword">if</span> l1 <span class="keyword">else</span> headB</span><br><span class="line">            l2 = l2.next <span class="keyword">if</span> l2 <span class="keyword">else</span> headA</span><br><span class="line">        <span class="keyword">return</span> l1</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="206-Reverse-Linked-List"><a href="#206-Reverse-Linked-List" class="headerlink" title="206. Reverse Linked List"></a>206. Reverse Linked List</h4><blockquote>
+<p>Reverse a singly linked list.</p>
+</blockquote>
+<ul>
+<li>保存当前头结点的下个节点。</li>
+<li>将当前头结点的下一个节点指向“上一个节点”，这一步是实现了反转。</li>
+<li>将当前头结点设置为“上一个节点”。</li>
+<li>将保存的下一个节点设置为头结点。</li>
+</ul>
+<p>做这种题总感觉赋来赋去的乱的很，，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reverseList</span><span class="params">(self, head: ListNode)</span> -&gt; ListNode:</span></span><br><span class="line">        l1 = ListNode(<span class="number">0</span>)</span><br><span class="line">        l1 = l1.next</span><br><span class="line">        <span class="keyword">while</span> head:</span><br><span class="line">            l2 = head.next</span><br><span class="line">            head.next = l1</span><br><span class="line">            l1 = head</span><br><span class="line">            head = l2</span><br><span class="line">        <span class="keyword">return</span> l1</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="328-Odd-Even-Linked-List"><a href="#328-Odd-Even-Linked-List" class="headerlink" title="328. Odd Even Linked List"></a>328. Odd Even Linked List</h4><blockquote>
+<p>Given a singly linked list, group all odd nodes together followed by the even nodes. Please note here we are talking about the node number and not the value in the nodes.</p>
+</blockquote>
+<ul>
+<li>先初始化两个小狗并保存，它们的 <code>next</code> 分别指向 <code>head</code> 和 <code>head.next</code>，然后让小狗各自站到自己的 <code>next</code> 上（此时两只小狗是错位的）</li>
+<li>检查 <code>even</code> 小狗是不是 <code>None</code>，是的话就赋给 <code>head</code> 结束循环，不是的话就让 <code>head</code> 指针向后两步（开始检查循环）</li>
+<li>循环结束之后，令 <code>odd</code> 小狗的 <code>next</code> 指向初始化时保存的 <code>even</code> 小狗的 <code>next</code></li>
+<li>返回 <code>even</code> 小狗的备份的 <code>next</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">oddEvenList</span><span class="params">(self, head: ListNode)</span> -&gt; ListNode:</span></span><br><span class="line">        l1 = odd = ListNode(<span class="number">0</span>)</span><br><span class="line">        l2 = even = ListNode(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">while</span> head:</span><br><span class="line">            odd.next = head</span><br><span class="line">            even.next = head.next</span><br><span class="line">            odd = odd.next</span><br><span class="line">            even = even.next</span><br><span class="line"></span><br><span class="line">            head = head.next.next <span class="keyword">if</span> even <span class="keyword">else</span> <span class="literal">None</span></span><br><span class="line">        odd.next = l2.next</span><br><span class="line">        <span class="keyword">return</span> l1.next</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="817-Linked-List-Components"><a href="#817-Linked-List-Components" class="headerlink" title="817. Linked List Components"></a>817. Linked List Components</h4><blockquote>
+<p>Return the number of connected components in G, where two values are connected if they appear consecutively in the linked list.</p>
+</blockquote>
+<p>利用集合的思路来做：判断当前的值在不在 G 中，如果在则判断下一位是不是 <strong>不在</strong> 或者是 <strong>结尾</strong>，是的话计数器加一，若当前的值不在则后羿一位继续判断。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numComponents</span><span class="params">(self, head: ListNode, G: List[int])</span> -&gt; int:</span></span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        setG = set(G)</span><br><span class="line">        <span class="keyword">while</span>(head):</span><br><span class="line">            <span class="keyword">if</span> head.val <span class="keyword">in</span> setG:</span><br><span class="line">                head = head.next</span><br><span class="line">                <span class="keyword">if</span> (head == <span class="literal">None</span> <span class="keyword">or</span> head.val <span class="keyword">not</span> <span class="keyword">in</span> setG):</span><br><span class="line">                    res += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                head = head.next</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="876-Middle-of-the-Linked-List"><a href="#876-Middle-of-the-Linked-List" class="headerlink" title="876. Middle of the Linked List"></a>876. Middle of the Linked List</h4><blockquote>
+<p>Given a non-empty, singly linked list with head node head, return a middle node of linked list. If there are two middle nodes, return the second middle node.</p>
+</blockquote>
+<p>两种思路，第二种实现仅仅需要五行。最近做题发现，很多时候解决一个问题，思路真的很重要。很多时候自己那些想法是需要被推翻和颠覆的。</p>
+<p>第二种方法的思路是同时跑两个小狗，一个一次跑一步，另一个跑两步，关键在于设置停止的条件：当跑得快的小狗首先跑到结尾时有两种情况，一种是自己站在 <code>None</code> 处，另一种是它的下一步 <code>next</code> 指向了 <code>None</code> 。这两个条件的任何一个出现时，就去把跑得慢的小狗的位置返回去 -=≡Σ(((つ•̀ω•́)つ…</p>
+<!--more-->
+<h5 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">middleNode</span><span class="params">(self, head: ListNode)</span> -&gt; ListNode:</span></span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        l = head</span><br><span class="line">        <span class="keyword">while</span> head:</span><br><span class="line">            head = head.next</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(int(i/<span class="number">2</span>)):</span><br><span class="line">            l = l.next</span><br><span class="line">        <span class="keyword">return</span> l</span><br></pre></td></tr></table></figure>
+<h5 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">middleNode</span><span class="params">(self, head: ListNode)</span> -&gt; ListNode:</span></span><br><span class="line">        l = head</span><br><span class="line">        <span class="keyword">while</span> l <span class="keyword">and</span> l.next:</span><br><span class="line">            l = l.next.next</span><br><span class="line">            head = head.next</span><br><span class="line">        <span class="keyword">return</span> head</span><br></pre></td></tr></table></figure>
+<p>Test</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">s  = Solution</span><br><span class="line">l1 = ListNode(<span class="number">1</span>)</span><br><span class="line">l1.next = ListNode(<span class="number">2</span>)</span><br><span class="line">l1 = l1.next</span><br><span class="line">l1.next = ListNode(<span class="number">3</span>)</span><br><span class="line">l1 = l1.next</span><br><span class="line">l1.next = ListNode(<span class="number">4</span>)</span><br><span class="line">l1 = l1.next</span><br><span class="line">l1.next = ListNode(<span class="number">5</span>)</span><br><span class="line">L = s.middleNode(s,l1)</span><br><span class="line"><span class="keyword">while</span> L:</span><br><span class="line">    print(L.val,<span class="string">" -&gt; "</span>, end = <span class="string">""</span>)</span><br><span class="line">    L = L.next</span><br><span class="line">print(<span class="string">"None"</span>)</span><br><span class="line"><span class="comment"># 3 -&gt; 4 -&gt; 5</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/LinkedList/" rel="tag"># LinkedList</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/11/Essay/" rel="next" title="随笔">
+                <i class="fa fa-chevron-left"></i> 随笔
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/11/Omni-directional wheel/" rel="prev" title="三轮全向轮运动学分析">
+                三轮全向轮运动学分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Pumpkin">
+            
+              <p class="site-author-name" itemprop="name">Pumpkin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/punnpkin" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/2218290293" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#21-Merge-Two-Sorted-Lists"><span class="nav-number">1.</span> <span class="nav-text">21. Merge Two Sorted Lists</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#24-Swap-Nodes-in-Pairs"><span class="nav-number">2.</span> <span class="nav-text">24. Swap Nodes in Pairs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#61-Rotate-List"><span class="nav-number">3.</span> <span class="nav-text">61. Rotate List</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#86-Partition-List"><span class="nav-number">4.</span> <span class="nav-text">86. Partition List</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#141-Linked-List-Cycle"><span class="nav-number">5.</span> <span class="nav-text">141. Linked List Cycle</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#143-Reorder-List"><span class="nav-number">6.</span> <span class="nav-text">143. Reorder List</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#160-Intersection-of-Two-Linked-Lists"><span class="nav-number">7.</span> <span class="nav-text">160. Intersection of Two Linked Lists</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#206-Reverse-Linked-List"><span class="nav-number">8.</span> <span class="nav-text">206. Reverse Linked List</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#328-Odd-Even-Linked-List"><span class="nav-number">9.</span> <span class="nav-text">328. Odd Even Linked List</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#817-Linked-List-Components"><span class="nav-number">10.</span> <span class="nav-text">817. Linked List Components</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#876-Middle-of-the-Linked-List"><span class="nav-number">11.</span> <span class="nav-text">876. Middle of the Linked List</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#方法1"><span class="nav-number">11.1.</span> <span class="nav-text">方法1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方法2"><span class="nav-number">11.2.</span> <span class="nav-text">方法2</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pumpkin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '11FkOBX5dC6pfH8TU56qcOSu-MdYXbMMI',
+        appKey: 'bS1r4eOSjJxoUQ0FUflCI1gf',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'5' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

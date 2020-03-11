@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="google-site-verification" content="FOuIEq-OrewqZZTr4wLzTPl---uyoGABPgoHHHq3550">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="第四讲假设某个时刻相机的位姿是 T ，它观察到一个在世界坐标系的一个空间点 p，观测数据为 z。这时，有$$z=Tp+w$$观测误差定义为：$$e=z-Tp$$假设有 N 个这样的三维点和观测值，目标就是寻找一个最佳的位姿使得整体误差最小化：$$\min_TJ(T)=\sum^N_{i=1}|z_i-Tp_i|^2_2$$求这个问题就是 求目标函数 J 对于变换矩阵 T 的导数。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="视觉SLAM第四讲笔记">
+<meta property="og:url" content="http://youngnan.tk/2020/03/11/2019-1-15-3/index.html">
+<meta property="og:site_name" content="YoungNan">
+<meta property="og:description" content="第四讲假设某个时刻相机的位姿是 T ，它观察到一个在世界坐标系的一个空间点 p，观测数据为 z。这时，有$$z=Tp+w$$观测误差定义为：$$e=z-Tp$$假设有 N 个这样的三维点和观测值，目标就是寻找一个最佳的位姿使得整体误差最小化：$$\min_TJ(T)=\sum^N_{i=1}|z_i-Tp_i|^2_2$$求这个问题就是 求目标函数 J 对于变换矩阵 T 的导数。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://youngnan.tk/images/slam/李群和李代数的关系.png">
+<meta property="og:updated_time" content="2020-03-11T01:48:07.742Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="视觉SLAM第四讲笔记">
+<meta name="twitter:description" content="第四讲假设某个时刻相机的位姿是 T ，它观察到一个在世界坐标系的一个空间点 p，观测数据为 z。这时，有$$z=Tp+w$$观测误差定义为：$$e=z-Tp$$假设有 N 个这样的三维点和观测值，目标就是寻找一个最佳的位姿使得整体误差最小化：$$\min_TJ(T)=\sum^N_{i=1}|z_i-Tp_i|^2_2$$求这个问题就是 求目标函数 J 对于变换矩阵 T 的导数。">
+<meta name="twitter:image" content="http://youngnan.tk/images/slam/李群和李代数的关系.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://youngnan.tk/2020/03/11/2019-1-15-3/">
+
+
+
+
+
+  <title>视觉SLAM第四讲笔记 | YoungNan</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoungNan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://youngnan.tk/2020/03/11/2019-1-15-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Pumpkin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungNan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">视觉SLAM第四讲笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-11T09:48:07+08:00">
+                2020-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/" itemprop="url" rel="index">
+                    <span itemprop="name">SLAM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/11/2019-1-15-3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/03/11/2019-1-15-3/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="第四讲"><a href="#第四讲" class="headerlink" title="第四讲"></a>第四讲</h3><p>假设某个时刻相机的位姿是 T ，它观察到一个在世界坐标系的一个空间点 p，观测数据为 z。这时，有<br>$$<br>z=Tp+w<br>$$<br>观测误差定义为：<br>$$<br>e=z-Tp<br>$$<br>假设有 N 个这样的三维点和观测值，目标就是寻找一个最佳的位姿使得整体误差最小化：<br>$$<br>\min_TJ(T)=\sum^N_{i=1}|z_i-Tp_i|^2_2<br>$$<br>求这个问题就是 <strong>求目标函数 J 对于变换矩阵 T 的导数</strong>。</p>
+<a id="more"></a>
+<h4 id="李群和李代数"><a href="#李群和李代数" class="headerlink" title="李群和李代数"></a>李群和李代数</h4><ul>
+<li><p>三维旋转矩阵构成了特殊正交群，变换矩阵构成了特殊欧式群。</p>
+</li>
+<li><p><strong>群</strong> 是一种集合加上一种运算的代数结构。</p>
+</li>
+<li><p>旋转矩阵集合和矩阵乘法构成群，变换矩阵和矩阵乘法也构成群。</p>
+</li>
+<li><p><strong>李群</strong> 是指具有连续性质的一类群，特殊正交群、特殊欧式群在实数空间上是连续的（刚体能够连续地在空间中运动），它们都是李群。</p>
+</li>
+<li><p><strong>李代数</strong> ：每个李群都有对应的李代数，用于描述李群的 <strong>局部性质</strong>。李代数由一个集合，一个数域和一个二元运算组成。二元运算称为李括号，李括号表达了两个元素的差异 ($\forall x\in \mathbb{V},[X,X]=0$)。</p>
+<p>特殊正交群 SO(3) 对应的李代数是定义在 $\mathbb{R}^3$ 上的向量，记作 φ ($\phi^\wedge=-(\dot R(t) R(t)^T)^T$)。</p>
+<p>特殊欧式群 SE(3) 对应的李代数中每个元素是一个六维向量，前三维表示平移，后三维表示旋转，记作<br>$$<br>\xi=\begin{bmatrix}\rho\\ \phi \end{bmatrix}\in \mathbb{R}^6<br>$$</p>
+<p>旋转矩阵的微分 $\dot R$ 是一个反对称矩阵左乘它本身，$\dot R(t) =\phi(t)^\wedge R(t)$。</p>
+</li>
+<li><p><strong>反对称矩阵</strong> （$A^T=-A$）特点是 对角线元素都是 <strong>零</strong>。3 × 3 的反对称矩阵只需用三个元素表示（自由度是3），可以用于建立三维向量和三维矩阵的关系。</p>
+<p>假设有一个反对称矩阵 A ：<br>$$<br>A=\begin{bmatrix}0 &amp;-a_3 &amp;a_2\\ a_3 &amp;0 &amp;-a_1\\ -a_2 &amp;a_1 &amp;0\end{bmatrix}<br>$$<br>定义一个三维向量：$a=[a_1,a_2,a_3]^T$，然后用 wedge 符号表示向量 a 和矩阵 A 之间的关系：<br>$$<br>a^\wedge=A<br>$$<br>于是<br>$$<br>\dot R(t) =\phi(t)^\wedge R(t)=\begin{bmatrix}0 &amp;-\phi_3 &amp;\phi_2\\ \phi_3 &amp;0 &amp;-\phi_1\\ -\phi_2 &amp;\phi_1 &amp;0\end{bmatrix}R(t)<br>$$</p>
+</li>
+</ul>
+<h4 id="指数与对数映射"><a href="#指数与对数映射" class="headerlink" title="指数与对数映射"></a>指数与对数映射</h4><p>李群空间的任意一个旋转矩阵R都可以用李代数空间的一个向量的反对称矩阵指数来近似。<br>$$<br>R(t)=\exp(\phi^\wedge_0t)<br>$$<br>旋转矩阵的导数可以由其对应的旋转向量指定，指导如何在旋转矩阵中进行微积分运算。</p>
+<p>so(3) 是旋转向量组成的空间，而指数映射是罗德里格斯公式，通过这个公式将 so(3) 中任意一个向量对应到了位于 SO(3) 中的旋转矩阵，对数映射是反变换。</p>
+<p><img src="/images/slam/李群和李代数的关系.png" alt></p>
+<h4 id="李代数求导与扰动模型"><a href="#李代数求导与扰动模型" class="headerlink" title="李代数求导与扰动模型"></a>李代数求导与扰动模型</h4><ul>
+<li><p>两个矩阵指数之积，会产生一些由李括号组成的余项。但是李代数是小量时，二次项可以忽略。利用这个关系有，一个旋转矩阵 $R_2$ 左乘一个微小的旋转矩阵 $R_1$ ，可以近似的看作在原有李代数 $\phi_2$ 加上了 $J_l(\phi_2)^{-1}\phi_1$ （称为 BHC 近似，右乘是 $J_r(\phi_1)^{-1}\phi_2$）。</p>
+</li>
+<li><p>SO(3) 在李代数的求导</p>
+<p>在 SLAM 中，对相机位置和姿态是由 SO(3) 上的旋转矩阵或者 SE(3) 上的变换矩阵描述的。通常会构建与位姿有关的函数，然后讨论该函数关于位姿的导数，以调整当前的估计值。使用李代数解决求导的思路分为两种：</p>
+<ol>
+<li>李代数表示姿态，然后根据李代数加法对李代数求导。</li>
+<li>对李群 左乘 或 右乘 微小扰动，然后对该扰动求导。</li>
+</ol>
+<p>扰动模型的计算较为简单，假设对一个空间点 p 进行了旋转得到了 Rp ，左扰动 $\Delta R$ 对应的李代数为 $\phi$ ，然后对 $\phi$ 求导：<br>$$<br>\begin{align}\frac{\partial (Rp)}{\partial\phi}&amp;=<br>\lim_{\phi\rightarrow 0}\frac{\exp(\phi^\wedge)\exp(\Phi^\wedge)p-\exp(\Phi^\wedge)p}{\phi}\\<br>&amp;\approx \lim_{\phi\rightarrow 0}\frac{(1+\phi^\wedge)\exp(\Phi^\wedge)p-\exp(\Phi^\wedge)p}{\phi}\\<br>&amp;=\lim_{\phi\rightarrow 0}\frac{\phi^\wedge\exp(\Phi^\wedge)p}{\phi}=\lim_{\phi\rightarrow 0}\frac{\phi^\wedge Rp}{\phi}\\<br>&amp;=\frac{-(Rp)^\wedge\phi }{\phi}=-(Rp)^{\wedge}\end{align}<br>$$</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/11/2019-1-15-2/" rel="next" title="视觉SLAM第三讲笔记">
+                <i class="fa fa-chevron-left"></i> 视觉SLAM第三讲笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/11/2019-1-22-4/" rel="prev" title="视觉SLAM第五讲笔记">
+                视觉SLAM第五讲笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Pumpkin">
+            
+              <p class="site-author-name" itemprop="name">Pumpkin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/punnpkin" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/2218290293" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第四讲"><span class="nav-number">1.</span> <span class="nav-text">第四讲</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#李群和李代数"><span class="nav-number">1.1.</span> <span class="nav-text">李群和李代数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#指数与对数映射"><span class="nav-number">1.2.</span> <span class="nav-text">指数与对数映射</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#李代数求导与扰动模型"><span class="nav-number">1.3.</span> <span class="nav-text">李代数求导与扰动模型</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pumpkin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '11FkOBX5dC6pfH8TU56qcOSu-MdYXbMMI',
+        appKey: 'bS1r4eOSjJxoUQ0FUflCI1gf',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'5' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

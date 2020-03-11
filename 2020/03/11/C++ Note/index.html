@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta name="google-site-verification" content="FOuIEq-OrewqZZTr4wLzTPl---uyoGABPgoHHHq3550">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C++,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. ifndef头件的中的#ifndef，这是一个很关键的东西。比如你有两个C文件，这两个C文件都include了同一个头文件。而编译时，这两个C文件要一同编译成一个可运行文件，于是问题来了，大量的声明冲突。 123456#ifndef &amp;lt;标识&amp;gt;#define &amp;lt;标识&amp;gt;............#endif 标识的命名有规定：每个头文件的命名应该是唯一的，标识的命名规则是头">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Note for C++">
+<meta property="og:url" content="http://youngnan.tk/2020/03/11/C++ Note/index.html">
+<meta property="og:site_name" content="YoungNan">
+<meta property="og:description" content="1. ifndef头件的中的#ifndef，这是一个很关键的东西。比如你有两个C文件，这两个C文件都include了同一个头文件。而编译时，这两个C文件要一同编译成一个可运行文件，于是问题来了，大量的声明冲突。 123456#ifndef &amp;lt;标识&amp;gt;#define &amp;lt;标识&amp;gt;............#endif 标识的命名有规定：每个头文件的命名应该是唯一的，标识的命名规则是头">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-11T01:48:07.758Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Note for C++">
+<meta name="twitter:description" content="1. ifndef头件的中的#ifndef，这是一个很关键的东西。比如你有两个C文件，这两个C文件都include了同一个头文件。而编译时，这两个C文件要一同编译成一个可运行文件，于是问题来了，大量的声明冲突。 123456#ifndef &amp;lt;标识&amp;gt;#define &amp;lt;标识&amp;gt;............#endif 标识的命名有规定：每个头文件的命名应该是唯一的，标识的命名规则是头">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://youngnan.tk/2020/03/11/C++ Note/">
+
+
+
+
+
+  <title>Note for C++ | YoungNan</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoungNan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://youngnan.tk/2020/03/11/C++ Note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Pumpkin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungNan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Note for C++</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-11T09:48:07+08:00">
+                2020-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/11/C++ Note/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/03/11/C++ Note/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-ifndef"><a href="#1-ifndef" class="headerlink" title="1. ifndef"></a>1. ifndef</h2><p>头件的中的#ifndef，这是一个很关键的东西。比如你有两个C文件，这两个C文件都include了同一个头文件。而编译时，这两个C文件要一同编译成一个可运行文件，于是问题来了，大量的声明冲突。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> <span class="meta-string">&lt;标识&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> <span class="meta-string">&lt;标识&gt;</span></span></span><br><span class="line"></span><br><span class="line">......</span><br><span class="line">......</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>标识的命名有规定：每个头文件的命名应该是唯一的，标识的命名规则是头文件名字的大写，前后加下划线，文件名中的 . 也变成下划线</p>
+<a id="more"></a>
+<h2 id="2-extern"><a href="#2-extern" class="headerlink" title="2. extern"></a>2. extern</h2><h3 id="2-1-extern-做变量声明"><a href="#2-1-extern-做变量声明" class="headerlink" title="2.1 extern 做变量声明"></a>2.1 extern 做变量声明</h3><p>extern 声明的全局变量和函数可以实现跨文件访问</p>
+<p>一般把所有全局变量和全局函数的实现都放在一个 <code>*.cpp</code> 文件里面，然后用一个同名的 <code>*.h</code> 文件包含所有的函数和变量的声明。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Demo.h</span></span><br><span class="line"><span class="meta">#pargma once</span></span><br><span class="line"><span class="keyword">extern</span> inta;</span><br><span class="line"><span class="keyword">extern</span> intb;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(inta,intb)</span></span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Demo.cpp</span></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">20</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(intm,intn)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> intm+intn;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-std-deque"><a href="#3-std-deque" class="headerlink" title="3. std::deque"></a>3. std::deque</h2><p>std::deque （ double-ended queue ，双端队列）是有下标顺序容器，它允许在其首尾两段快速插入及删除。</p>
+<h2 id="4-Make"><a href="#4-Make" class="headerlink" title="4. Make"></a>4. Make</h2><p>代码变为可执行文件的过程叫编译(complie)，对编译的安排就是构建(build)。</p>
+<h3 id="4-1-Make-命令"><a href="#4-1-Make-命令" class="headerlink" title="4.1 Make 命令"></a>4.1 Make 命令</h3><p>make 是一个根据指定的 Shell 命令进行构建的工具。</p>
+<h3 id="4-2-Makefile-文件的格式"><a href="#4-2-Makefile-文件的格式" class="headerlink" title="4.2 Makefile 文件的格式"></a>4.2 Makefile 文件的格式</h3><p>Makefile 由一系列规则组成，形式如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">target</span>&gt;</span>:<span class="tag">&lt;<span class="name">prerequisites</span>&gt;</span></span><br><span class="line">[tab]<span class="tag">&lt;<span class="name">commands</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-2-1-目标-target"><a href="#4-2-1-目标-target" class="headerlink" title="4.2.1 目标 (target)"></a>4.2.1 目标 (target)</h4><p>一个目标就是是一个规则，目标通常是文件名，指明 Make 命令所有构建的对象。目标可以是多个文件名，中间用空格分隔。</p>
+<p>目标可以是某个操作的名字，称为“伪目标” (phony target)。</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"><span class="meta-keyword">.PHONY</span>:clean</span></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">    rm *.o</span><br></pre></td></tr></table></figure>
+<p>执行伪目标时要明确声明，因为如果当前目录中，正好有一个文件叫做clean，那么这个命令不会执行。因为Make发现clean文件已经存在，就认为没有必要重新构建了，就不会执行指定的rm命令。</p>
+<p><code>make</code> 不加参数时默认执行Makefile文件的第一个目标。</p>
+<h4 id="4-2-2-前置条件-prerequisites"><a href="#4-2-2-前置条件-prerequisites" class="headerlink" title="4.2.2 前置条件 (prerequisites)"></a>4.2.2 前置条件 (prerequisites)</h4><p>前置条件是一组文件名，之间用空格分隔。它指定了“目标”是否重新构建的标准：只要有一个前置文件不存在，或者有过更新（以时间戳为准），“目标“就需要重新构建。</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">result.txt: source.txt</span></span><br><span class="line">    cp source.txt result.txt</span><br></pre></td></tr></table></figure>
+<p>构建 result.txt 的前置条件是 source.txt 。如果当前目录中，source.txt 已经存在，那么make result.txt可以正常运行。</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">source.txt:</span></span><br><span class="line">    echo <span class="string">"this is the source"</span> &gt; source.txt</span><br></pre></td></tr></table></figure>
+<p>source.txt后面没有前置条件，就意味着它跟其他文件都无关，只要这个文件还不存在，每次调用 make，它都会生成。</p>
+<p>生成多个文件的写法：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">source: file1 file2 file3</span></span><br></pre></td></tr></table></figure>
+<p>在这种写法中，<code>source</code> 只是一个伪目标。</p>
+<h4 id="4-2-3-命令-commands"><a href="#4-2-3-命令-commands" class="headerlink" title="4.2.3 命令 (commands)"></a>4.2.3 命令 (commands)</h4><p>命令表示如何更新目标文件，是构建目标的具体指令，运行的结果通常是生成目标文件。</p>
+<p>每行命令之前必须有一个 tab 键，亦可以用 <code>.RECIPEPREFIX</code> 声明。</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.RECIPEPREFIX = &gt;</span><br><span class="line"><span class="section">all:</span></span><br><span class="line">&gt; echo Hello, world</span><br></pre></td></tr></table></figure>
+<p>每个命令都是在一个单独的 shell 中执行的，且这些 shell 之间 <strong>没有</strong> 继承关系。</p>
+<h3 id="4-3-Makefile-语法"><a href="#4-3-Makefile-语法" class="headerlink" title="4.3 Makefile 语法"></a>4.3 Makefile 语法</h3><ol>
+<li>注释 #</li>
+<li>回声(echoing) make会打印每条命令，然后再执行，这就叫做回声（echoing），在命令的前面加上@，就可以关闭回声。</li>
+<li>通配符 用于指定一组符合条件的文件名。</li>
+<li>模式匹配 类似正则的匹配方式。</li>
+<li>变量和赋值符 自定义变量调用使用 $() 调用 shell 变量使用 <code>$$HOME</code> 的形式。赋值符有 <code>= := ?= +=</code> 四种<ul>
+<li>= 赋值，类似于引用，即 c=a+b 若 a 的值之后发生了变化，c的值也会变化</li>
+<li>:= 和 = 正好相反</li>
+<li>?= 如果没有被赋值过就赋予等号后面的值</li>
+<li>+= 追加等号后面的值</li>
+</ul>
+</li>
+<li>内置变量 \$(CC) 指向当前使用的编译器，\$(MAKE) 指向当前使用的Make工具，还有<a href="https://www.gnu.org/software/make/manual/html_node/Implicit-Variables.html" target="_blank" rel="noopener">很多</a>。</li>
+<li>自动变量<ul>
+<li>\$@ 指代当前目标，就是 Make 命令当前构建的那个目标。</li>
+<li>\$&lt; 指代第一个前置条件。比如，规则为 t: p1 p2，那么 \$&lt; 就指代p1。</li>
+<li>\$? 指代比目标更新的所有前置条件，比如，规则为 t: p1 p2，其中 p2 的时间戳比 t 新，\$? 就指代p2。</li>
+<li>\$^ 指代所有的前置条件。</li>
+<li>\$<em> 指代匹配符 % 匹配的部分， 比如 % 匹配 f1.txt 中的f1 ，\$</em> 就表示 f1。</li>
+<li>\$(@D) 和 \$(@F) 分别指向 \$@ 的目录名和文件名。比如，\$@ 是 src/input.c，那么 \$(@D) 的值为 src ，$(@F) 的值为 input.c。</li>
+<li>\$(&lt;D) 和 \$(&lt;F) 分别指向 \$&lt; 的目录名和文件名。</li>
+</ul>
+</li>
+<li>判断和循环 使用 Bash 语法</li>
+<li>函数<ul>
+<li>wildcard 通配符<br>  使用 <code>src = $(wildcard *.cpp)</code> 来获取工作目录下所有的 <code>.cpp</code> 文件列表</li>
+<li>notdir 去除路径信息<br>  使用 <code>dir = $(notdir $(src))</code> 去除 src 中的路径信息</li>
+<li>patsubst 匹配替换<br>  <code>obj=$(patsubst %.cpp,%.o,$(dir))</code> 或者 <code>obj=$(dir:%.c=%.o)</code> 把 dir 中后缀是 .cpp 的替换为 .o</li>
+</ul>
+</li>
+</ol>
+<h2 id="5-g"><a href="#5-g" class="headerlink" title="5. g++"></a>5. g++</h2><h3 id="5-1-g-的基本用法："><a href="#5-1-g-的基本用法：" class="headerlink" title="5.1 g++ 的基本用法："></a>5.1 g++ 的基本用法：</h3><p>编译器的默认动作：</p>
+<ol>
+<li><p>预处理 .i 文件</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -E test.cpp -o test.i</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>预处理后的文件转为汇编语言 .s 文件</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -S test.i -o test.s</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将汇编语言变为目标代码 .o 文件</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -c -test.s -o test.o</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>链接生成可执行程序 bin 文件，-o 为将产生的可执行文件用指定的文件名</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ test.o -o test</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>-l 用于指定程序要链接的库，-l 参数紧接着就是库名字，例如 <code>lib.OpenNI.so</code> 的库名字是 OpenNI</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ test.cpp -lOpenNI</span><br></pre></td></tr></table></figure>
+<p> 存在于 <code>/lib</code> <code>/local/lib</code> <code>usr/local/lib</code> 的库文件可以用 -l 参数进行链接。</p>
+<p> -L 用于指定库文件所在的目录，例如 <code>-L/usr/X11R6/lib -lX11</code> 。还有一些高级用法暂时不懂…</p>
+</li>
+<li><p>-I 用于指定头文件所在的目录，可以加相对路径 <code>-I../</code>。 -include 用于指定头文件(因为代码里会 <code>#include xxx</code>，所以一般不用)。</p>
+</li>
+<li><p>-Wall、-w、-v</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-Wall   打印出gcc提供的警告信息</span><br><span class="line"></span><br><span class="line">-w      关闭所有警告信息</span><br><span class="line"></span><br><span class="line">-v      列出所有编译步骤</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>-g  编译的时候会产生调试信息</p>
+</li>
+</ol>
+<h3 id="5-2-示例"><a href="#5-2-示例" class="headerlink" title="5.2 示例"></a>5.2 示例</h3><p>如果多于一个的源码文件在 g++ 命令中指定，它们都将被编译并被链接成一个单一的可执行文件。例如:</p>
+<ol>
+<li><p>头文件，定义了具有一个函数的类</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*speak.h*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Speak</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>说明了函数的内容</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* speak.cpp */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"speak.h"</span></span></span><br><span class="line"><span class="keyword">void</span> Speak::sayHello(<span class="keyword">const</span> <span class="keyword">char</span> *str)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello "</span> &lt;&lt; str &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 Speak 类</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* hellospeak.cpp */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"speak.h"</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Speak speak;</span><br><span class="line">    speak.sayHello(<span class="string">"world"</span>);</span><br><span class="line">    <span class="keyword">return</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 <code>g++</code> 进行编译：</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ hellospeak.cpp speak.cpp -o hellospeak</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="6-写一个通用的-Makefile-文件"><a href="#6-写一个通用的-Makefile-文件" class="headerlink" title="6. 写一个通用的 Makefile 文件"></a>6. 写一个通用的 Makefile 文件</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">.PHONY all clean</span><br><span class="line"></span><br><span class="line">CXX = g++</span><br><span class="line">CXXFLAGS = -Wall -g</span><br><span class="line">INCLUDES = -Iinclude</span><br><span class="line">LIBS = -lm</span><br><span class="line">TARGET = ../bin/demo</span><br><span class="line"></span><br><span class="line">SRCDIR := src</span><br><span class="line">TESTDIR := test</span><br><span class="line">SRCOBJS := <span class="variable">$(<span class="built_in">patsubst</span> %.cpp,%.o,$(<span class="built_in">wildcard</span> <span class="variable">$(SRCDIR)</span>/*.cpp)</span>)</span><br><span class="line">TESTOBJS := <span class="variable">$(<span class="built_in">patsubst</span> %.cpp, %.o, $(<span class="built_in">wildcard</span> <span class="variable">$(TESTDIR)</span>/*.cpp)</span>)</span><br><span class="line">OBJS := <span class="variable">$(SRCOBJS)</span> <span class="variable">$(TESTOBJS)</span></span><br><span class="line"></span><br><span class="line"><span class="section">all: <span class="variable">$(TARGET)</span></span></span><br><span class="line"></span><br><span class="line"><span class="variable">$(TARGET)</span>:<span class="variable">$(OBJS)</span></span><br><span class="line">    <span class="variable">$(CXX)</span> <span class="variable">$(CXXFLAGS)</span> <span class="variable">$(INCLUDES)</span> <span class="variable">$(LIBS)</span> <span class="variable">$^</span> -o <span class="variable">$@</span></span><br><span class="line"></span><br><span class="line"><span class="section">%.o:%.cpp</span></span><br><span class="line">    <span class="variable">$(CXX)</span> <span class="variable">$(CXXFLAGS)</span> <span class="variable">$(INCLUDES)</span> <span class="variable">$&lt;</span> -c -o <span class="variable">$@</span></span><br><span class="line"></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">    -@rm <span class="variable">$(TARGET)</span> <span class="variable">$(OBJS)</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/11/2019-1-22-6/" rel="next" title="视觉SLAM第七讲笔记">
+                <i class="fa fa-chevron-left"></i> 视觉SLAM第七讲笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/11/Deploy FTP on Ubuntu/" rel="prev" title="记录 vsftpd 的配置">
+                记录 vsftpd 的配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Pumpkin">
+            
+              <p class="site-author-name" itemprop="name">Pumpkin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/punnpkin" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/2218290293" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-ifndef"><span class="nav-number">1.</span> <span class="nav-text">1. ifndef</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-extern"><span class="nav-number">2.</span> <span class="nav-text">2. extern</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-extern-做变量声明"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 extern 做变量声明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-std-deque"><span class="nav-number">3.</span> <span class="nav-text">3. std::deque</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Make"><span class="nav-number">4.</span> <span class="nav-text">4. Make</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Make-命令"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Make 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Makefile-文件的格式"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 Makefile 文件的格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-目标-target"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.2.1 目标 (target)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-前置条件-prerequisites"><span class="nav-number">4.2.2.</span> <span class="nav-text">4.2.2 前置条件 (prerequisites)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-3-命令-commands"><span class="nav-number">4.2.3.</span> <span class="nav-text">4.2.3 命令 (commands)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Makefile-语法"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 Makefile 语法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-g"><span class="nav-number">5.</span> <span class="nav-text">5. g++</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-g-的基本用法："><span class="nav-number">5.1.</span> <span class="nav-text">5.1 g++ 的基本用法：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-示例"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-写一个通用的-Makefile-文件"><span class="nav-number">6.</span> <span class="nav-text">6. 写一个通用的 Makefile 文件</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pumpkin</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '11FkOBX5dC6pfH8TU56qcOSu-MdYXbMMI',
+        appKey: 'bS1r4eOSjJxoUQ0FUflCI1gf',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'5' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
